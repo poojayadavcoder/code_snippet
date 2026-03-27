@@ -55,9 +55,9 @@ const SnippetForm = ({ isEdit = false }) => {
 
     try {
       if (isEdit) {
-        await axios.put(`${process.env.BASE_URL}/snippets/${id}`, payload);
+        await axios.put(`${import.meta.env.VITE_BASE_URL}/snippets/${id}`, payload);
       } else {
-        await axios.post(`${process.env.BASE_URL}/snippets`, payload);
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/snippets`, payload);
       }
       navigate("/");
     } catch (err) {

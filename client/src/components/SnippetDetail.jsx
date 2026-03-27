@@ -35,7 +35,7 @@ const SnippetDetail = () => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this snippet?")) {
       try {
-        await axios.delete(`${process.env.BASE_URL}/snippets/${id}`);
+        await axios.delete(`${import.meta.env.VITE_BASE_URL}/snippets/${id}`);
         navigate("/");
       } catch (err) {
         alert("Failed to delete snippet.");
