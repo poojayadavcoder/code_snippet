@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Plus, Terminal, LayoutGrid, Code, Tag } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = ({ onSearch }) => {
+  const {logout} = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchChange = (e) => {
@@ -40,6 +42,10 @@ const Navbar = ({ onSearch }) => {
             Add Snippet
           </Link>
         </div>
+
+       <button onClick={logout} className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full font-medium transition-all shadow-lg shadow-red-600/20">
+            Logout
+        </button>
       </div>
     </nav>
   );

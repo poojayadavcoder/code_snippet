@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../lib/api";
 import { Save, X, Type, Code, Tag, AlignLeft, Info } from "lucide-react";
 
 const SnippetForm = ({ isEdit = false }) => {
@@ -20,7 +20,7 @@ const SnippetForm = ({ isEdit = false }) => {
     if (isEdit && id) {
       const fetchSnippet = async () => {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/snippets/${id}`);
+          const response = await api.get(`/snippets/${id}`);
           const { title, language, code, tags, description } = response.data;
           setFormData({
             title: title || "",
@@ -55,9 +55,9 @@ const SnippetForm = ({ isEdit = false }) => {
 
     try {
       if (isEdit) {
-        await axios.put(`${import.meta.env.VITE_BASE_URL}/snippets/${id}`, payload);
+        await api.put(`/snippets/${id}`, payload);
       } else {
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/snippets`, payload);
+        await api.post(`/snippets`, payload);
       }
       navigate("/");
     } catch (err) {

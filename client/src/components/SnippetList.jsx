@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+
 import SnippetCard from "./SnippetCard";
 import { Loader2, AlertCircle, Inbox } from "lucide-react";
+import api from "../../lib/api";
 
 const SnippetList = ({ searchTerm }) => {
   const [snippets, setSnippets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log(import.meta.env.BASE_URL);
   const fetchSnippets = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/snippets`);
+      const response = await api.get(`/snippets`);
       setSnippets(response.data);
       setError(null);
     } catch (err) {
@@ -30,7 +30,7 @@ const SnippetList = ({ searchTerm }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this snippet?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_BASE_URL}/snippets/${id}`);
+        await api.delete(`/snippets/${id}`);
         setSnippets(snippets.filter((s) => s._id !== id));
       } catch (err) {
         alert("Failed to delete snippet.");

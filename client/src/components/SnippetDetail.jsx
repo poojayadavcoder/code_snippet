@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../lib/api";
 import { ArrowLeft, Edit2, Trash2, Copy, Check, Terminal, Clock, Tag } from "lucide-react";
 
 const SnippetDetail = () => {
@@ -14,7 +14,7 @@ const SnippetDetail = () => {
   useEffect(() => {
     const fetchSnippet = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/snippets/${id}`);
+        const response = await api.get(`/snippets/${id}`);
         setSnippet(response.data);
       } catch (err) {
         setError("Snippet not found.");
@@ -35,7 +35,7 @@ const SnippetDetail = () => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this snippet?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_BASE_URL}/snippets/${id}`);
+        await api.delete(`/snippets/${id}`);
         navigate("/");
       } catch (err) {
         alert("Failed to delete snippet.");

@@ -2,12 +2,14 @@
 
 @theme {
   --color-primary: #3b82f6;
-  --color-secondary: #10b981;
-  --color-accent: #8b5cf6;
+  --color-secondary: #8b5cf6;
+  --color-accent: #d946ef;
   --color-danger: #ef4444;
   --color-dark-800: #1e293b;
   --color-dark-900: #0f172a;
   --color-dark-950: #020617;
+  --color-card: rgba(15, 23, 42, 0.6);
+  --color-card-border: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
@@ -26,7 +28,33 @@
 }
 
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-violet-400 to-fuchsia-400;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
+  filter: blur(80px);
+  z-index: -1;
+}
+
+.card-glow {
+  @apply relative overflow-hidden;
+}
+
+.card-glow::after {
+  content: "";
+  @apply absolute inset-0 opacity-0 transition-opacity duration-500 pointer-events-none;
+  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+}
+
+.card-glow:hover::after {
+  @apply opacity-100;
 }
 
 ::-webkit-scrollbar {
