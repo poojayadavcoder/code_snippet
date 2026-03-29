@@ -10,7 +10,7 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: "http://localhost:5173", // Default Vite port
+  origin: process.env.VITE_BASE_URL,
   credentials: true
 }));
 app.use(cookieParser());
