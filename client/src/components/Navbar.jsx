@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Search, Plus, Terminal, LayoutGrid, Code, Tag } from "lucide-react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Search, Plus, Terminal } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 const Navbar = ({ onSearch }) => {
-  const {logout} = useAuth();
+  const { logout } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -13,21 +14,23 @@ const Navbar = ({ onSearch }) => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 glass border-b border-white/10 py-4 px-6 mb-8">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="p-2 bg-primary rounded-lg group-hover:rotate-12 transition-transform duration-300">
-            <Terminal className="text-white" size={24} />
+    <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 py-4 px-6 mb-8">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+         <Link to="/dashboard" className="flex items-center gap-2 group">
+          <div className="p-1.5 bg-black border border-white/30 rounded-lg transition-colors">
+            <Terminal className="text-white" size={20} />
           </div>
-          <span className="text-2xl font-bold gradient-text">SnippetHub</span>
+          <span className="text-[18px] font-semibold text-white">
+            SnippetKit
+          </span>
         </Link>
 
-        <div className="flex-1 max-w-2xl w-full relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+        <div className="flex-1 max-w-xl w-full relative group">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-white transition-colors" size={18} />
           <input
             type="text"
-            placeholder="Search snippets by title, language, or tags..."
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 text-slate-200 transition-all"
+            placeholder="Search snippets..."
+            className="w-full bg-black border border-white/20 rounded-xl py-2.5 pl-11 pr-4 focus:outline-none focus:border-white/40 focus:ring-1 focus:ring-white/10 text-slate-200 transition-all placeholder:text-slate-600"
             value={searchTerm}
             onChange={handleSearchChange}
           />
@@ -36,16 +39,19 @@ const Navbar = ({ onSearch }) => {
         <div className="flex items-center gap-4">
           <Link
             to="/create"
-            className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-full font-medium transition-all shadow-lg shadow-primary/20"
+            className="flex items-center gap-2 bg-black text-white border border-white/30 hover:bg-white/5 px-5 py-2 rounded-xl font-medium transition-all"
           >
             <Plus size={18} />
-            Add Snippet
+            <span>New Snippet</span>
           </Link>
-        </div>
-
-       <button onClick={logout} className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full font-medium transition-all shadow-lg shadow-red-600/20">
+          
+          <button 
+            onClick={logout} 
+            className="text-xs font-semibold bg-red-400 px-3 py-3 rounded-[7px] text-black cursor-pointer hover:bg-red-300 transition-colors uppercase"
+          >
             Logout
-        </button>
+          </button>
+        </div>
       </div>
     </nav>
   );

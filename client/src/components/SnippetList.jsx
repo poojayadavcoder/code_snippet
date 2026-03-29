@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
 import SnippetCard from "./SnippetCard";
 import { Loader2, AlertCircle, Inbox } from "lucide-react";
 import api from "../../lib/api";
@@ -50,21 +49,21 @@ const SnippetList = ({ searchTerm }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-        <Loader2 className="animate-spin mb-4" size={40} />
-        <p className="text-lg font-medium">Loading your snippets...</p>
+      <div className="flex flex-col items-center justify-center py-32 text-slate-500">
+        <Loader2 className="animate-spin mb-6 text-white/20" size={48} />
+        <p className="text-sm font-bold uppercase tracking-[0.2em]">Syncing library...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="max-w-md mx-auto p-6 glass border-danger/30 rounded-xl text-center">
-        <AlertCircle className="mx-auto mb-4 text-danger" size={40} />
-        <p className="text-white font-medium mb-4">{error}</p>
+      <div className="max-w-md mx-auto p-10 bg-[#0b0f1a] border border-white/10 rounded-3xl text-center shadow-2xl">
+        <AlertCircle className="mx-auto mb-6 text-red-500/50" size={48} />
+        <p className="text-white font-bold mb-6 tracking-tight">{error}</p>
         <button
           onClick={fetchSnippets}
-          className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition-colors"
+          className="bg-white text-black px-6 py-2.5 rounded-xl font-bold hover:bg-slate-200 transition-all active:scale-95"
         >
           Try Again
         </button>
@@ -74,16 +73,25 @@ const SnippetList = ({ searchTerm }) => {
 
   if (filteredSnippets.length === 0) {
     return (
-      <div className="text-center py-20 text-slate-500">
-        <Inbox className="mx-auto mb-4 opacity-20" size={64} />
-        <p className="text-xl">No snippets found.</p>
-        {searchTerm && <p className="mt-2 outline-none">Try a different search term.</p>}
+      <div className="text-center mt-5">
+        <div className="relative inline-block mb-3">
+            <div className="absolute inset-0 bg-white/5 blur-3xl rounded-full"></div>
+            <Inbox className="relative mx-auto text-slate-800" size={80} strokeWidth={1} />
+        </div>
+        <p className="text-2xl font-semibold text-white mb-2 tracking-tight">
+            {searchTerm ? "No matches found" : "Your library is empty"}
+        </p>
+        <p className="text-slate-500 font-medium max-w-xs mx-auto">
+            {searchTerm 
+              ? `We couldn't find any snippets matching "${searchTerm}".` 
+              : "Start building your personal code collection."}
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {filteredSnippets.map((snippet) => (
         <SnippetCard key={snippet._id} snippet={snippet} onDelete={handleDelete} />
       ))}

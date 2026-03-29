@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import LandingNavbar from "../components/LandingNavbar";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,54 +13,90 @@ function Login() {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate("/dashboard"); // redirect after login
+      navigate("/dashboard");
     } catch (err) {
       alert("Login failed. Check credentials.");
     }
   };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-100">
-      <div className="bg-white w-96 p-8 rounded-xl shadow-lg">
-        
-        <h2 className="text-2xl font-bold text-center text-black mb-6">
-          Login
-        </h2>
+    <div className="min-h-screen bg-black text-white relative overflow-hidden flex flex-col">
+      <LandingNavbar />
+      
+      {/* Background Glow */}
+      <div className="hero-glow opacity-50"></div>
+      
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-md mt-15">
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+            
+            <div className="relative bg-[#0b0f1a] border border-white/10 rounded-2xl shadow-2xl p-8 md:p-10">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl font-semibold mb-2 tracking-tight">Welcome back</h2>
+                <p className="text-slate-400 text-sm">Log in to your SnippetKit account</p>
+              </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <label className="text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="border text-black border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label className="text-sm font-medium text-gray-700">Password</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            className="border text-black border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-white ml-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="name@example.com"
+                    className="w-full bg-black border border-white/30  px-4 py-3 rounded-xl 
+                    focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all
+                     placeholder:text-slate-600"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
 
-          <button
-            type="submit"
-            className="bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition"
-          >
-            Login
-          </button>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between ml-1">
+                    <label className="text-xs font-semibold uppercase tracking-wider text-white">
+                      Password
+                    </label>
+                    <a href="#" className="text-[11px] text-primary hover:text-blue-400 transition-colors">
+                      Forgot password?
+                    </a>
+                  </div>
+                  <input
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    className="w-full bg-black border border-white/30 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-slate-600"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
 
-        </form>
+                <button
+                  type="submit"
+                  className="w-full bg-black cursor-pointer text-white border border-white/30 py-3.5 rounded-xl font-semibold transition-all shadow-xl shadow-white/5 mt-4"
+                >
+                  Sign In
+                </button>
+              </form>
 
-        <p className="text-sm text-center mt-4 text-gray-600">
-          Don't have an account? 
-          <Link to="/signup" className="text-blue-600 cursor-pointer ml-1">
-            Sign up
-          </Link>
-        </p>
-
+              <div className="mt-10 text-center">
+                <p className="text-sm text-slate-400">
+                  Don't have an account? 
+                  <Link to="/signup" className="text-white font-semibold hover:underline ml-1.5 transition-all">
+                    Sign up
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <footer className="py-8 text-center text-[10px] text-slate-600 border-t border-white/5 relative z-10">
+        © {new Date().getFullYear()} SnippetKit. All rights reserved.
+      </footer>
     </div>
   );
 }

@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import Navbar from "./components/Navbar";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-      <div>
-        {/* <h1 className="text-3xl font-bold">Hello</h1> */}
-          <Outlet context={{ searchTerm }} />
+    <div className="min-h-screen bg-black text-white relative">
+      <div className="hero-glow opacity-30 fixed inset-0 pointer-events-none"></div>
+      <div className="relative z-10">
+        <Outlet context={{ searchTerm, setSearchTerm }} />
       </div>
+    </div>
   );
 }
 
