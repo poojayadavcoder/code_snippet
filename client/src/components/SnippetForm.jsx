@@ -79,7 +79,7 @@ const SnippetForm = ({ isEdit = false }) => {
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 to-violet-500/10 rounded-3xl blur-2xl opacity-50"></div>
           
-          <div className="relative bg-[#0b0f1a] border border-white/10 rounded-3xl shadow-2xl p-8 md:p-12">
+          <div className="relative bg-[#0b0f1a] border border-white/10 rounded-3xl shadow-2xl py-4 px-3 sm:p-8 md:p-12">
             <div className="mb-10">
               <h1 className="text-3xl font-semibold text-white mb-2 tracking-tight">
                 {isEdit ? "Edit Snippet" : "New Snippet"}

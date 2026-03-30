@@ -59,7 +59,7 @@ const SnippetDetail = () => {
     return (
         <>
             <Navbar onSearch={() => {}} />
-            <div className="max-w-5xl mx-auto px-6 py-12">
+            <div className="max-w-5xl mx-auto px-2 sm:px-6 py-12">
                 <button 
                   onClick={() => navigate('/dashboard')}
                   className="flex items-center gap-2 cursor-pointer text-slate-500 hover:text-white bg-black border border-white/30 rounded-[7px] px-3 py-2 mb-8 transition-colors group"
@@ -69,7 +69,7 @@ const SnippetDetail = () => {
                 </button>
 
                 <div className="bg-gradient-to-t from-[#0b0f1a] via-[#111729]/50 to-[#050505] border border-white/10 rounded-3xl overflow-hidden shadow-2xl mb-8">
-                    <div className="p-8 md:p-12 border-b border-white/5">
+                    <div className="px-3 py-4 sm:p-8 md:p-12 border-b border-white/5">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
                             <div>
                                 <div className="flex items-center gap-3 mb-4">

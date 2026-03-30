@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import LandingNavbar from "./LandingNavbar";
 import { Check,Search,Lock,List,} from "lucide-react";
 import CodeSnippetUI from "./CodeSnippetUI";
@@ -8,6 +11,15 @@ import FeatureCard from "./FeatureCard";
 // class="hero-glow opacity-30 fixed inset-0 pointer-events-none"
 
 const Landing = () => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/dashboard");
+    }
+  }, [user, loading, navigate]);
+
   return (
     <div className="">
       <LandingNavbar />
