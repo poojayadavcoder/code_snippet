@@ -15,7 +15,7 @@ const Navbar = ({ onSearch }) => {
 
   return (
     <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 py-4 px-2 sm:px-6 mb-8">
-      <div className="max-w-7xl bg-red-800 mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
          <Link to="/dashboard" className="flex items-center gap-2 group">
           <div className="p-1.5 bg-black border border-white/30 rounded-lg transition-colors">
             <Terminal className="text-white" size={20} />
