@@ -12,7 +12,7 @@ function Register() {
 
   useEffect(() => {
     if (!loading && user) {
-      navigate("/dashboard");
+      navigate("/login");
     }
   }, [user, loading, navigate]);
 
