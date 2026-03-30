@@ -35,11 +35,11 @@ export default function CodeSnippetUI() {
   };
 
   return (
-    <div className="relative w-full max-w-5xl group mx-auto px-4 mt-8">
+    <div className="relative max-w-6xl group mx-auto sm:px-4 mt-8">
       {/* Background Glow */}
       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-fuchsia-500/10 rounded-2xl blur-3xl opacity-50 group-hover:opacity-80 transition duration-1000"></div>
 
-      <div className="relative bg-[#0b0f1a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex min-h-[500px]">
+      <div className="relative bg-black border border-white/10 rounded-2xl shadow-2xl overflow-x-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-transparent flex min-h-[500px]">
         
         {/* Sidebar */}
         <div className="w-60 border-r border-white/5 bg-[#080808]/50 p-5 hidden md:block">
@@ -91,7 +91,7 @@ export default function CodeSnippetUI() {
         </div>
 
         {/* Editor Area */}
-        <div className="flex-1 flex flex-col bg-[#020617]/50">
+        <div className="flex-1 flex flex-col bg-[#020617]/50 ">
           
           <Tab.Group>
             {/* Toolbar / Tabs */}
@@ -185,7 +185,7 @@ export default function CodeSnippetUI() {
                       <div key={i}>{i + 1}</div>
                     ))}
                   </div>
-                  <div className="flex-1 p-6 overflow-x-auto selection:bg-primary/30">
+                  <div className="flex-1 p-6 selection:bg-primary/30 ">
                     <SyntaxHighlighter
                       language="typescript"
                       style={nightOwl}

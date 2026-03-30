@@ -5,12 +5,14 @@ import CodePreview from "./CodePreview";
 import LandingFooter from "./LandingFooter";
 import FeatureCard from "./FeatureCard";
 
+// class="hero-glow opacity-30 fixed inset-0 pointer-events-none"
+
 const Landing = () => {
   return (
-    <div className="min-h-screen bg-black text-slate-100">
+    <div className="">
       <LandingNavbar />
 
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-32 px-6 overflow-hidden">
         <div className="hero-glow"></div>
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
           <div className="mb-8 flex items-center justify-center gap-2 bg-white/5 border border-white/10 py-1.5 px-4 rounded-full text-xs font-semibold hover:border-white/20 transition-all cursor-default">
@@ -41,9 +43,12 @@ const Landing = () => {
               Start Saving Snippets
             </a>
           </div>
-
-          <CodeSnippetUI />
-        </div>
+          
+         
+         </div>
+      </section>
+      <section className="px-5">
+         <CodeSnippetUI />
       </section>
 
       <section className="py-12 px-6 bg-[#020202]">
@@ -56,7 +61,7 @@ const Landing = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+           <div className="grid md:grid-cols-2 gap-6">
             <FeatureCard
               icon={Check}
               title="Syntax Highlighting"
@@ -86,7 +91,7 @@ const Landing = () => {
                 <div className="h-2 w-8 bg-white/5 rounded"></div>
               </div>
             </FeatureCard>
-          </div>
+          </div> 
         </div>
       </section>
 

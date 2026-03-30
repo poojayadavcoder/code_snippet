@@ -31,7 +31,7 @@ function Login() {
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
             
-            <div className="relative bg-[#0b0f1a] border border-white/10 rounded-2xl shadow-2xl p-8 md:p-10">
+            <div className="relative bg-[#0b0f1a] border border-white/10 rounded-2xl shadow-2xl py-4 px-3 sm:p-8 md:p-10">
               <div className="text-center mb-10">
                 <h2 className="text-3xl font-semibold mb-2 tracking-tight">Welcome back</h2>
                 <p className="text-slate-400 text-sm">Log in to your SnippetKit account</p>
