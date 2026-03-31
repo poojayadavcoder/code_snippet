@@ -19,6 +19,14 @@ const generateRefreshToken = (user) => {
   );
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+};
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -44,16 +52,12 @@ const login = async (req, res) => {
     const refreshToken = generateRefreshToken(user);
 
    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-     sameSite: 'none',
+      ...cookieOptions,
       maxAge: 15 * 60 * 1000,
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: 'none',
+      ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -138,9 +142,7 @@ const refreshToken = (req, res) => {
     );
 
     res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: 'none',
+        ...cookieOptions,
       maxAge: 15 * 60 * 1000,
     });
 
@@ -155,8 +157,8 @@ const refreshToken = (req, res) => {
 
 const logout = (req, res) => {
 
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
+  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("refreshToken", cookieOptions);
 
   res.json({
     message: "Logged out successfully",
@@ -165,7 +167,7 @@ const logout = (req, res) => {
 
 const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password -refreshToken -__v");
+    const user = await User.findById(req.user.id).select("-password -__v");
     if (!user) return res.status(404).json({ message: "User not found" });
     return res.status(200).json({ user });
   } catch (err) {
