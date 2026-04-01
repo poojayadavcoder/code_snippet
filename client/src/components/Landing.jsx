@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import LandingNavbar from "./LandingNavbar";
 import { Check,Search,Lock,List,} from "lucide-react";
@@ -11,14 +11,13 @@ const Landing = () => {
   const { user,loading} = useAuth();
   const navigate = useNavigate();
 
-  if (!loading && user) {
-  navigate("/dashboard");
-}
-
+ if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <>
-    { loading&& (
+    
     <div className="">
       <LandingNavbar />
 
@@ -108,7 +107,7 @@ const Landing = () => {
       <CodePreview />
 
       <LandingFooter />
-    </div>)}
+    </div>
     </>
   );
 };
