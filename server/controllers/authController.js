@@ -167,11 +167,16 @@ const logout = (req, res) => {
 
 const getMe = async (req, res) => {
   try {
+    if (!req.user || !req.user.id) {
+      console.error("GET ME: req.user or req.user.id is missing", req.user);
+      return res.status(401).json({ message: "Not authorized - User ID missing" });
+    }
     const user = await User.findById(req.user.id).select("-password -__v");
     if (!user) return res.status(404).json({ message: "User not found" });
     return res.status(200).json({ user });
   } catch (err) {
-    return res.status(500).json({ message: "Server error" });
+    console.error("GET ME ERROR:", err);
+    return res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 

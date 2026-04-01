@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+// import User from "./userModel.js";
+import User from "./User.js";
 const snippetSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -13,7 +14,12 @@ const snippetSchema = new mongoose.Schema({
     required: true
   },
   tags: [String],
-  description: String
+  description: String,
+   user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  }
 }, { timestamps: true });
 
 export default mongoose.model("Snippet", snippetSchema);

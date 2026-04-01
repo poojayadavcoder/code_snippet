@@ -10,13 +10,16 @@ const protect = (req, res, next) => {
     });
   }
 
+  console.log("Token from cookie:", token);
   try {
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET
     );
-    console.log(decoded)
-    req.user = decoded;
+    console.log(decoded.id)
+    console.log("Decoded ID:", decoded.id);
+    req.user = { id: decoded.id };
+    console.log(req.user)
 
     next();
 

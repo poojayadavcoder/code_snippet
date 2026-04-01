@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../../lib/api";
-import { Loader } from "lucide-react";
+import { AlertCircle, Inbox, Loader } from "lucide-react";
 import SnippetCard from "./SnippetCard";
 const SnippetList = ({ searchTerm }) => {
   const [snippets, setSnippets] = useState([]);
