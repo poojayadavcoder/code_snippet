@@ -8,13 +8,6 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
      const { loading } = useAuth();
 
-  if (loading) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <Loader/>
-      </div>
-    );
-  }
   return (
     <div className="min-h-screen bg-black text-white relative">
       <ScrollToTop />

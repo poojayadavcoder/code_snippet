@@ -6,7 +6,11 @@ import { Loader } from "lucide-react";
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return <Loader />;
+  if (loading) return (
+    <div className="w-full h-screen flex justify-center items-center bg-black">
+      <Loader className="animate-spin text-white" />
+    </div>
+  );
 
   if (!user) return <Navigate to="/" replace />;
 
