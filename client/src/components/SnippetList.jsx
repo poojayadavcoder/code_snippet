@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import SnippetCard from "./SnippetCard";
-import { Loader2, AlertCircle, Inbox } from "lucide-react";
 import api from "../../lib/api";
-
+import { Loader } from "lucide-react";
+import SnippetCard from "./SnippetCard";
 const SnippetList = ({ searchTerm }) => {
   const [snippets, setSnippets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,8 +49,7 @@ const SnippetList = ({ searchTerm }) => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-32 text-slate-500">
-        <Loader2 className="animate-spin mb-6 text-white/20" size={48} />
-        <p className="text-sm font-bold uppercase tracking-[0.2em]">Syncing library...</p>
+     <Loader/>
       </div>
     );
   }

@@ -1,10 +1,20 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import ScrollToTop from "./components/ScrollToTop";
+import { useAuth } from "../context/AuthContext";
+import { Loader } from "lucide-react";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+     const { loading } = useAuth();
 
+  if (loading) {
+    return (
+      <div >
+        <Loader/>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-black text-white relative">
       <ScrollToTop />

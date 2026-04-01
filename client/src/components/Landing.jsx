@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import LandingNavbar from "./LandingNavbar";
@@ -8,19 +7,18 @@ import CodePreview from "./CodePreview";
 import LandingFooter from "./LandingFooter";
 import FeatureCard from "./FeatureCard";
 
-// class="hero-glow opacity-30 fixed inset-0 pointer-events-none"
-
 const Landing = () => {
-  const { user, loading } = useAuth();
+  const { user,loading} = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!loading && user) {
-      navigate("/dashboard");
-    }
-  }, [user, loading, navigate]);
+  if (!loading && user) {
+  navigate("/dashboard");
+}
+
 
   return (
+    <>
+    { loading&& (
     <div className="">
       <LandingNavbar />
 
@@ -110,7 +108,8 @@ const Landing = () => {
       <CodePreview />
 
       <LandingFooter />
-    </div>
+    </div>)}
+    </>
   );
 };
 
