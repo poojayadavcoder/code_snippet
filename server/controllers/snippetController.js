@@ -1,10 +1,8 @@
 import Snippet from "../models/snippetModel.js";
 import User from "../models/User.js";
+
 const createSnippet = async (req, res) => {
   try {
-    // console.log("USER ID:", req.user.id);
-// console.log("BODY:", req.body);
-
     const savedSnippet = await Snippet.create({
       ...req.body,
       user: req.user.id,
@@ -25,12 +23,37 @@ const Snippets = async (req, res) => {
   }
 };
 
+const snippets_public=async (req,res)=>{
+  try{
+     const { language, search, page = 1, limit = 9 } = req.query;
+
+     let query = { visibility: "public" };
+      
+    if (language && language !== "All Snippets") {
+      query.language = language;
+    }
+    
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+      const snippets = await Snippet.find(query)
+      .populate("user", "name")
+      .skip((page - 1) * limit)
+      .limit(limit);
+    res.status(200).json(snippets);
+  }
+  catch (error){
+    res.status(500).json({message:error.message})
+  }
+}
+
 const snippetsById = async (req, res) => {
   try {
-    const snippet = await Snippet.findById(req.params.id);
+    const snippet = await Snippet.findById(req.params.id).populate("user", "name");
+
     if (!snippet) {
       return res.status(404).json({ message: "Snippet not found" });
-    }
+    } 
     res.json(snippet);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -117,4 +140,5 @@ export {
   snippetsById,
   snippetsByTag,
   snippetByLanguage,
+  snippets_public
 };

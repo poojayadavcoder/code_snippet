@@ -6,10 +6,12 @@ import CodeSnippetUI from "./CodeSnippetUI";
 import CodePreview from "./CodePreview";
 import LandingFooter from "./LandingFooter";
 import FeatureCard from "./FeatureCard";
+import { useState } from "react";
 
 const Landing = () => {
   const { user,loading} = useAuth();
   const navigate = useNavigate();
+  const [search,setSearch]=useState("")
 
  if (user) {
     return <Navigate to="/dashboard" replace />;
@@ -17,9 +19,8 @@ const Landing = () => {
 
   return (
     <>
-    
     <div className="">
-      <LandingNavbar />
+      <LandingNavbar onSearch={setSearch} search={search}/>
 
       <section className="relative pt-32 px-6 overflow-hidden">
         <div className="hero-glow"></div>

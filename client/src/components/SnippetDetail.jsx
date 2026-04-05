@@ -5,18 +5,21 @@ import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Terminal, Clock, Tag, ChevronLeft, Copy, Edit2, Trash2 } from 'lucide-react';
 import api from '../../lib/api';
 import Navbar from './Navbar';
+import { useAuth } from '../../context/AuthContext';
 
 const SnippetDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+     const { user: currentUser } = useAuth();
     const [snippet, setSnippet] = useState(null);
     const [loading, setLoading] = useState(true);
     const [copied, setCopied] = useState(false);
-
+   
     useEffect(() => {
         const fetchSnippet = async () => {
             try {
                 const response = await api.get(`/snippets/${id}`);
+                console.log(response)
                 setSnippet(response.data);
             } catch (err) {
                 console.error(err);
@@ -55,6 +58,10 @@ const SnippetDetail = () => {
             Snippet not found.
         </div>
     );
+    
+    const isOwner =
+    currentUser &&
+    (snippet.user?._id === currentUser._id || snippet.user === currentUser._id);
 
     return (
         <>
@@ -84,7 +91,7 @@ const SnippetDetail = () => {
                                 <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight leading-tight">{snippet.title}</h1>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                          { isOwner &&( <div className="flex items-center gap-3">
                                 <button
                                     onClick={() => navigate(`/edit/${snippet._id}`)}
                                     className="p-3 bg-white/5 cursor-pointer hover:bg-white/10 text-slate-400 hover:text-white rounded-2xl border border-white/10 transition-all active:scale-95"
@@ -98,6 +105,7 @@ const SnippetDetail = () => {
                                     <Trash2 size={20} />
                                 </button>
                             </div>
+                            )}
                         </div>
 
                         <p className="text-slate-400 text-lg leading-relaxed max-w-3xl font-medium">{snippet.description}</p>

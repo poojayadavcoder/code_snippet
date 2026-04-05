@@ -15,6 +15,11 @@ const snippetSchema = new mongoose.Schema({
   },
   tags: [String],
   description: String,
+  visibility: {
+    type: String,
+    enum: ["public", "private"],
+    default: "private"
+  },
    user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

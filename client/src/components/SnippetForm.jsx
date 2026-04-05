@@ -11,6 +11,7 @@ const SnippetForm = ({ isEdit = false }) => {
     title: "",
     description: "",
     code: "",
+    visibility: "public",
     language: "javascript",
     tags: "",
   });
@@ -26,6 +27,7 @@ const SnippetForm = ({ isEdit = false }) => {
             title: snippet.title,
             description: snippet.description || "",
             code: snippet.code,
+            visibility: snippet.visibility || "public",
             language: snippet.language || "javascript",
             tags: snippet.tags ? snippet.tags.join(", ") : "",
           });
@@ -43,7 +45,10 @@ const SnippetForm = ({ isEdit = false }) => {
     try {
       const payload = {
         ...formData,
-        tags: formData.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
       };
 
       if (isEdit) {
@@ -72,20 +77,27 @@ const SnippetForm = ({ isEdit = false }) => {
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 cursor-pointer text-slate-500 hover:text-white bg-black border border-white/30 rounded-[7px] px-3 py-2 mb-8 transition-colors group"
         >
-          <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-semibold uppercase text-white">Cancel</span>
+          <ChevronLeft
+            size={20}
+            className="group-hover:-translate-x-1 transition-transform"
+          />
+          <span className="text-sm font-semibold uppercase text-white">
+            Cancel
+          </span>
         </button>
 
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 to-violet-500/10 rounded-3xl blur-2xl opacity-50"></div>
-          
+
           <div className="relative bg-[#0b0f1a] border border-white/10 rounded-3xl shadow-2xl py-4 px-3 sm:p-8 md:p-12">
             <div className="mb-10">
               <h1 className="text-3xl font-semibold text-white mb-2 tracking-tight">
                 {isEdit ? "Edit Snippet" : "New Snippet"}
               </h1>
               <p className="text-slate-500 font-medium">
-                {isEdit ? "Update your code block details" : "Add a fresh piece of code to your library"}
+                {isEdit
+                  ? "Update your code block details"
+                  : "Add a fresh piece of code to your library"}
               </p>
             </div>
 
@@ -126,6 +138,22 @@ const SnippetForm = ({ isEdit = false }) => {
                     <option value="go">Go</option>
                   </select>
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-xs font-bold uppercase text-gray-100/90 tracking-wider ml-1">
+                  <Layout size={14} /> Visibility
+                </label>
+
+                <select
+                  name="visibility"
+                  value={formData.visibility}
+                  onChange={handleChange}
+                  className="w-full bg-black border border-white/20 text-white px-5 py-3.5 rounded-2xl focus:outline-none"
+                >
+                  <option value="public">Public</option>
+                  <option value="private">Private</option>
+                </select>
               </div>
 
               <div className="space-y-2">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Terminal } from "lucide-react";
-const LandingNavbar = () => {
+import { Search, Terminal } from "lucide-react";
+import { useState } from "react";
+const LandingNavbar = ({onSearch,search}) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black backdrop-blur-md border-b px-2 py-4 sm:px-6 border-white/30">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -14,6 +15,12 @@ const LandingNavbar = () => {
         </Link>
 
         <div className="flex items-center gap-3 sm:gap-6">
+          <Link
+            to="/public"
+            className="text-sm font-medium text-gray-200 hover:underline border border-white/30 px-2 py-1 rounded-[7px]"
+          >
+            Public Snippets
+          </Link>
           <Link
             to="/login"
             className="text-sm font-medium text-gray-200 hover:underline border border-white/30 px-2 py-1 rounded-[7px]"

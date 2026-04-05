@@ -12,6 +12,7 @@ import SnippetForm from './components/SnippetForm'
 import SnippetDetail from './components/SnippetDetail'
 import { AuthProvider } from '../context/AuthContext.jsx'
 import Landing from './components/Landing.jsx'
+import PublicSnippets from './components/PublicSnippets.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       index: true,
       element: <Landing />
     },
+     {
+        path: 'public',
+        element: <PublicSnippets />
+      },
       {
         path: 'login',
         element: <Login />
@@ -44,7 +49,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'snippet/:id',
-        element: <ProtectedRoute><SnippetDetail /></ProtectedRoute>
+        // element: <ProtectedRoute><SnippetDetail /></ProtectedRoute>
+        element:<SnippetDetail/>
       }
     ]
   }

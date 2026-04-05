@@ -25,6 +25,7 @@ const Navbar = ({ onSearch }) => {
           </span>
         </Link>
 
+
         <div className="flex-1 max-w-xl w-full relative group">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-white transition-colors" size={18} />
           <input
@@ -37,6 +38,13 @@ const Navbar = ({ onSearch }) => {
         </div>
 
         <div className="flex items-center gap-4">
+          <Link
+            to="/public"
+            className="flex items-center gap-2 bg-black text-white border border-white/30 hover:bg-white/5 px-5 py-2 rounded-xl font-medium transition-all"
+          >
+            <span>Public Snippets</span>
+          </Link>
+
           <Link
             to="/create"
             className="flex items-center gap-2 bg-black text-white border border-white/30 hover:bg-white/5 px-5 py-2 rounded-xl font-medium transition-all"
