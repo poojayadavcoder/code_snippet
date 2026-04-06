@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
-import { Code, Clock, ChevronRight, Trash2, Edit2, User } from "lucide-react";
+import { Code, Clock, ChevronRight, Trash2, Edit2, User, Heart } from "lucide-react";
 import { useAuth } from '../../context/AuthContext';
+import { useEffect, useState } from "react";
 
 const SnippetCard = ({ snippet, onDelete }) => {
   const { user: currentUser } = useAuth();
-  
+  const [like, setLike] = useState(
+    currentUser && snippet.likes?.includes(currentUser._id)
+  );
+  const [likeCount, setLikeCount] = useState(snippet.likes?.length || 0);
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
@@ -15,6 +20,34 @@ const SnippetCard = ({ snippet, onDelete }) => {
   const isOwner =
     currentUser &&
     (snippet.user?._id === currentUser._id || snippet.user === currentUser._id);
+
+  const handleLike = async () => {
+    if (!currentUser) {
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/snippet_likes/${snippet._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (res.ok) {
+        const data = await res.json();
+        setLike(data.liked);
+        setLikeCount(data.likeCount);
+      }
+    } catch (error) {
+      console.error("Error liking snippet:", error);
+    }
+  };
+
   return (
     <div className="group relative">
       <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 via-violet-500/20 to-fuchsia-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
@@ -30,7 +63,12 @@ const SnippetCard = ({ snippet, onDelete }) => {
             </span>
           </div>
 
-          <div className="flex gap-2">
+
+          <div className="flex gap-2 items-center">
+            <button className={`cursor-pointer flex items-center gap-1`} onClick={handleLike}>
+              <Heart className={`${like ? "text-red-400 fill-red-400" : "text-white"}`} size={20} />
+              <span className="text-xs text-slate-400">{likeCount}</span>
+            </button>
             {isOwner && (
               <>
               <button className="text-gray-700 capitalize">{snippet.visibility}</button>

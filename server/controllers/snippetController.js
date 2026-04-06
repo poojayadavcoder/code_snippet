@@ -132,6 +132,32 @@ const snippetByLanguage = async (req, res) => {
   }
 };
 
+const snippet_likes = async (req, res) => {
+  try {
+    const snippetId = req.params.id;
+    const userId = req.user.id; // Use userId from protect middleware
+
+    const snippet = await Snippet.findById(snippetId);
+    if (!snippet) {
+      return res.status(404).json({ message: "Snippet not found" });
+    }
+
+    const index = snippet.likes.indexOf(userId);
+    if (index === -1) {
+      snippet.likes.push(userId);
+    } else {
+      snippet.likes.splice(index, 1);
+    }
+
+    await snippet.save();
+
+    res.json({ likeCount: snippet.likes.length, liked: index === -1 });
+  } catch (error) {
+    console.error("Error in snippet_likes:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export {
   createSnippet,
   Snippets,
@@ -140,5 +166,6 @@ export {
   snippetsById,
   snippetsByTag,
   snippetByLanguage,
-  snippets_public
+  snippets_public,
+  snippet_likes
 };

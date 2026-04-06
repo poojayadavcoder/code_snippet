@@ -36,12 +36,10 @@ export default function CodeSnippetUI() {
 
   return (
     <div className="relative max-w-6xl group mx-auto sm:px-4 mt-8">
-      {/* Background Glow */}
       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-fuchsia-500/10 rounded-2xl blur-3xl opacity-50 group-hover:opacity-80 transition duration-1000"></div>
 
       <div className="relative bg-black border border-white/10 rounded-2xl shadow-2xl overflow-x-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-transparent flex min-h-[500px]">
         
-        {/* Sidebar */}
         <div className="w-60 border-r border-white/5 bg-[#080808]/50 p-5 hidden md:block">
           <div className="flex items-center gap-2 mb-8 opacity-50">
              <div className="flex gap-1">
