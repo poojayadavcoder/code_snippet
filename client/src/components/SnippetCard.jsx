@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
-import { Code, Clock, ChevronRight, Trash2, Edit2, User, Heart } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Code, Clock, ChevronRight, Trash2, Edit2, User, Heart, LogInIcon } from "lucide-react";
 import { useAuth } from '../../context/AuthContext';
 import { useEffect, useState } from "react";
 import socket from "../socket.js"
 
 const SnippetCard = ({ snippet, onDelete }) => {
+  const navigate=useNavigate()
   const { user: currentUser } = useAuth();
   const [like, setLike] = useState(
     currentUser && snippet.likes?.includes(currentUser._id)
   );
   const [likeCount, setLikeCount] = useState(snippet.likes?.length || 0);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -24,6 +26,7 @@ const SnippetCard = ({ snippet, onDelete }) => {
 
   const handleLike = async () => {
     if (!currentUser) {
+      setShowLoginPopup(true);
       return;
     }
 
@@ -152,6 +155,43 @@ const SnippetCard = ({ snippet, onDelete }) => {
           </Link>
         </div>
       </div>
+
+      {showLoginPopup && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div 
+            className="bg-[#0b0f1a] border border-white/10 rounded-2xl p-8 max-w-sm w-full shadow-2xl transform animate-in zoom-in-95 duration-300 relative overflow-hidden"
+          >
+
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
+            
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10 shadow-inner">
+                <span className="text-3xl"><LogInIcon className="text-white"/></span>
+              </div>
+              
+              <h4 className="text-xl font-bold text-white mb-2">Login Required</h4>
+              <p className="text-slate-400 text-sm mb-8 leading-relaxed">
+                Please login first to like and save your favorite snippets!
+              </p>
+              
+              <div className="flex flex-col w-full gap-3">
+                <Link
+                  to="/login"
+                  className="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-slate-200 transition-all active:scale-95 flex items-center justify-center gap-2"
+                >
+                  Go to Login
+                </Link>
+                <button
+                  onClick={() => setShowLoginPopup(false)}
+                  className="w-full bg-white/5 text-slate-400 font-medium py-3 rounded-xl hover:bg-white/10 hover:text-white transition-all active:scale-95"
+                >
+                  Maybe later
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
