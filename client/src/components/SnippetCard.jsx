@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Code, Clock, ChevronRight, Trash2, Edit2, User, Heart } from "lucide-react";
 import { useAuth } from '../../context/AuthContext';
 import { useEffect, useState } from "react";
+import socket from "../socket.js"
 
 const SnippetCard = ({ snippet, onDelete }) => {
   const { user: currentUser } = useAuth();
@@ -47,6 +48,20 @@ const SnippetCard = ({ snippet, onDelete }) => {
       console.error("Error liking snippet:", error);
     }
   };
+
+
+ useEffect(() => {
+  socket.on("likeUpdated", (data) => {
+
+    if (data.snippetId === snippet._id) {
+      setLikeCount(data.likeCount);
+    }
+
+  });
+
+  return () => socket.off("likeUpdated");
+
+}, []);
 
   return (
     <div className="group relative">

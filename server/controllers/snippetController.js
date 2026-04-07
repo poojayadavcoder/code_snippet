@@ -1,6 +1,6 @@
 import Snippet from "../models/snippetModel.js";
 import User from "../models/User.js";
-
+import { io } from "../app.js";
 const createSnippet = async (req, res) => {
   try {
     const savedSnippet = await Snippet.create({
@@ -150,6 +150,11 @@ const snippet_likes = async (req, res) => {
     }
 
     await snippet.save();
+
+  io.emit("likeUpdated", {
+    snippetId: snippet._id,
+    likeCount: snippet.likes.length
+  });
 
     res.json({ likeCount: snippet.likes.length, liked: index === -1 });
   } catch (error) {
