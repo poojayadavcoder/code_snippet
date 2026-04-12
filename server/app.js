@@ -1,14 +1,15 @@
+import 'dotenv/config';
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import connectDB from './config/db.js'
 import snippetRoutes from './routes/snippetRoutes.js'
 import authRoutes from './routes/authRoutes.js'
-import dotenv from "dotenv";
 import { Server } from 'socket.io'
 import http from "http"
+import client from './redisClient.js'
 
-dotenv.config();
+
 
 const app = express();
 

@@ -1,6 +1,7 @@
 import Snippet from "../models/snippetModel.js";
 import User from "../models/User.js";
 import { io } from "../app.js";
+import client from "../redisClient.js";
 const createSnippet = async (req, res) => {
   try {
     const savedSnippet = await Snippet.create({
@@ -14,9 +15,17 @@ const createSnippet = async (req, res) => {
 };
 
 const Snippets = async (req, res) => {
+   const cacheKey = `snippets:${req.user.id}`;
   try {
-    console.log("USER ID:", req.user.id);
+    const cachedData = await client.get(cacheKey);
+
+    if (cachedData) {
+      console.log("⚡ Cache HIT (Redis)");
+      return res.json(JSON.parse(cachedData));
+    }
+     console.log("❌ Cache MISS");
     const data = await Snippet.find({ user: req.user.id });
+    await client.setEx(cacheKey, 60, JSON.stringify(data));
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -26,6 +35,18 @@ const Snippets = async (req, res) => {
 const snippets_public=async (req,res)=>{
   try{
      const { language, search, page = 1, limit = 9 } = req.query;
+     
+    const cacheKey = `snippets:public:${language || "all"}:${search || "none"}:${page}:${limit}`;
+
+    const cachedData = await client.get(cacheKey);
+
+    if (cachedData) {
+      console.log("⚡ Cache HIT");
+      return res.status(200).json(JSON.parse(cachedData));
+    }
+
+    console.log("❌ Cache MISS");
+
 
      let query = { visibility: "public" };
       
@@ -36,10 +57,13 @@ const snippets_public=async (req,res)=>{
     if (search) {
       query.title = { $regex: search, $options: "i" };
     }
-      const snippets = await Snippet.find(query)
+
+    const snippets = await Snippet.find(query)
       .populate("user", "name")
       .skip((page - 1) * limit)
       .limit(limit);
+
+    await client.setEx(cacheKey, 60, JSON.stringify(snippets));
     res.status(200).json(snippets);
   }
   catch (error){
@@ -49,11 +73,23 @@ const snippets_public=async (req,res)=>{
 
 const snippetsById = async (req, res) => {
   try {
+    const cacheKey = `snippet:${req.params.id}`;
+
+    const cachedData=client.get(cacheKey)
+
+    if (cachedData) {
+      console.log("⚡ Cache HIT");
+      return res.status(200).json(JSON.parse(cachedData));
+    }
+
+    console.log("❌ Cache MISS");
+
     const snippet = await Snippet.findById(req.params.id).populate("user", "name");
 
     if (!snippet) {
       return res.status(404).json({ message: "Snippet not found" });
     } 
+    await client.setEx(cacheKey, 60, JSON.stringify(snippet));
     res.json(snippet);
   } catch (error) {
     res.status(500).json({ message: error.message });
